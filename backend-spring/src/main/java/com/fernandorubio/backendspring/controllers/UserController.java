@@ -2,7 +2,6 @@ package com.fernandorubio.backendspring.controllers;
 
 import com.fernandorubio.backendspring.models.requests.UserDetailsRequestModel;
 import com.fernandorubio.backendspring.models.responses.UserRest;
-import com.fernandorubio.backendspring.services.UserService;
 import com.fernandorubio.backendspring.services.UserServiceInterface;
 import com.fernandorubio.backendspring.shared.dto.UserDto;
 
