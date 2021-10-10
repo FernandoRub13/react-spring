@@ -1,13 +1,15 @@
 package com.fernandorubio.backendspring.services;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-import com.fernandorubio.backendspring.UserRepository;
 import com.fernandorubio.backendspring.entities.UserEntity;
+import com.fernandorubio.backendspring.repositories.UserRepository;
 import com.fernandorubio.backendspring.shared.dto.UserDto;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,9 +48,29 @@ public class UserService implements UserServiceInterface {
   }
 
   @Override
-  public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {
-    // TODO Auto-generated method stub
-    return null;
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    UserEntity userEntity = userRepository.findUserByEmail(email);
+    
+    if(userEntity == null){
+      throw new UsernameNotFoundException(email);
+    }
+
+    return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>() );
+  }
+
+  @Override
+  public UserDto getUser(String email) {
+    UserEntity userEntity = userRepository.findUserByEmail(email);
+    
+    if(userEntity == null){
+      throw new UsernameNotFoundException(email);
+    }
+
+    UserDto userToReturn  = new UserDto();
+
+    BeanUtils.copyProperties(userEntity, userToReturn);
+
+    return userToReturn;
   }
   
 }

@@ -1,4 +1,4 @@
-package com.fernandorubio.backendspring;
+package com.fernandorubio.backendspring.repositories;
 
 import com.fernandorubio.backendspring.entities.UserEntity;
 

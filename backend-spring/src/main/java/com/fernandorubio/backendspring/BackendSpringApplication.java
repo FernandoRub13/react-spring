@@ -1,5 +1,7 @@
 package com.fernandorubio.backendspring;
 
+import com.fernandorubio.backendspring.security.AppProperties;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,14 @@ public class BackendSpringApplication {
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder(){
 		return new BCryptPasswordEncoder();
+	}
+	@Bean
+	public SpringApplicationContext springapApplicationContext(){
+		return new SpringApplicationContext();
+	}
+	@Bean(name = "AppProperties")
+	public AppProperties getAppProperties(){
+		return new AppProperties();
 	}
 
 }
