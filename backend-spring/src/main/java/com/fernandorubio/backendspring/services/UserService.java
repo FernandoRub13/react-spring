@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.fernandorubio.backendspring.entities.UserEntity;
+import com.fernandorubio.backendspring.exceptions.EmailExistsException;
 import com.fernandorubio.backendspring.repositories.UserRepository;
 import com.fernandorubio.backendspring.shared.dto.UserDto;
 
@@ -25,7 +26,7 @@ public class UserService implements UserServiceInterface {
   public UserDto createUser(UserDto user) {
 
     if (userRepository.findUserByEmail(user.getEmail()) != null ) 
-      throw new RuntimeException("El correo electrónico ya existe");
+      throw new EmailExistsException("El correo electrónico ya existe");
     
     UserEntity userEntity = new UserEntity();
     BeanUtils.copyProperties(user, userEntity);
