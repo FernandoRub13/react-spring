@@ -5,6 +5,7 @@ import com.fernandorubio.backendspring.models.responses.UserRest;
 import com.fernandorubio.backendspring.services.UserServiceInterface;
 import com.fernandorubio.backendspring.shared.dto.UserDto;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,9 +31,10 @@ public class UserController {
 
     UserDto userDto = userService.getUser(email);
 
-    UserRest userToReturn = new UserRest();
-
-    BeanUtils.copyProperties(userDto, userToReturn);
+    
+    // BeanUtils.copyProperties(userDto, userToReturn);
+    ModelMapper mapper = new ModelMapper();
+    UserRest userToReturn = mapper.map(userDto, UserRest.class);
 
     return userToReturn;
     
