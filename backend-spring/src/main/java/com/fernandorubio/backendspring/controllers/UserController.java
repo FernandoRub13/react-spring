@@ -1,8 +1,14 @@
 package com.fernandorubio.backendspring.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.fernandorubio.backendspring.models.requests.UserDetailsRequestModel;
+import com.fernandorubio.backendspring.models.responses.PostRest;
 import com.fernandorubio.backendspring.models.responses.UserRest;
 import com.fernandorubio.backendspring.services.UserServiceInterface;
+import com.fernandorubio.backendspring.shared.dto.PostDto;
 import com.fernandorubio.backendspring.shared.dto.UserDto;
 
 import org.modelmapper.ModelMapper;
@@ -22,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   @Autowired UserServiceInterface userService;
+  @Autowired ModelMapper mapper;
   
   @GetMapping(produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
   public UserRest getUser(){
@@ -31,9 +38,6 @@ public class UserController {
 
     UserDto userDto = userService.getUser(email);
 
-    
-    // BeanUtils.copyProperties(userDto, userToReturn);
-    ModelMapper mapper = new ModelMapper();
     UserRest userToReturn = mapper.map(userDto, UserRest.class);
 
     return userToReturn;
@@ -50,4 +54,25 @@ public class UserController {
     BeanUtils.copyProperties(createdUser, userToReturn);
     return  userToReturn;
   }
+
+  @GetMapping(path = "/posts")
+  public List<PostRest> getPosts() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String email = authentication.getPrincipal().toString();
+
+    List<PostDto> posts =  userService.getUserPosts(email);
+
+    List<PostRest> postRests = new ArrayList<>();
+    //convertir de lista de post dto a post rest
+    for (PostDto post: posts) {
+      PostRest postRest = mapper.map(post, PostRest.class);
+      if (postRest.getExpiresAt().compareTo(new Date(System.currentTimeMillis())) < 0) {
+        postRest.setExpired(true);
+      }
+      postRests.add(postRest);
+    }
+    return postRests ;
+  }
+  
+
 }

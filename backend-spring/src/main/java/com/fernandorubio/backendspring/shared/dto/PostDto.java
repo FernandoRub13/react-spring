@@ -8,11 +8,11 @@ public class PostDto implements Serializable{
   
   private long id;
 
-  private String post_id;
+  private String postId;
   private String title;
   private String content;
-  private Date expires_at;
-  private Date created_at;
+  private Date expiresAt ;
+  private Date createdAt ;
   private UserDto user;
   private ExposureDto exposure;
   public long getId() {
@@ -21,11 +21,11 @@ public class PostDto implements Serializable{
   public void setId(long id) {
     this.id = id;
   }
-  public String getPost_id() {
-    return post_id;
+  public String getPostId() {
+    return postId;
   }
-  public void setPost_id(String post_id) {
-    this.post_id = post_id;
+  public void setPostId(String postId) {
+    this.postId = postId;
   }
   public String getTitle() {
     return title;
@@ -39,17 +39,17 @@ public class PostDto implements Serializable{
   public void setContent(String content) {
     this.content = content;
   }
-  public Date getExpires_at() {
-    return expires_at;
+  public Date getExpiresAt () {
+    return expiresAt ;
   }
-  public void setExpires_at(Date expires_at) {
-    this.expires_at = expires_at;
+  public void setExpiresAt (Date expiresAt ) {
+    this.expiresAt  = expiresAt ;
   }
-  public Date getCreated_at() {
-    return created_at;
+  public Date getCreatedAt () {
+    return createdAt ;
   }
-  public void setCreated_at(Date created_at) {
-    this.created_at = created_at;
+  public void setCreatedAt (Date createdAt ) {
+    this.createdAt  = createdAt ;
   }
   public UserDto getUser() {
     return user;

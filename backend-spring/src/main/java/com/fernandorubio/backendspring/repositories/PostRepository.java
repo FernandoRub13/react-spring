@@ -1,11 +1,21 @@
 package com.fernandorubio.backendspring.repositories;
 
+import java.util.Date;
+import java.util.List;
+
 import com.fernandorubio.backendspring.entities.PostEntity;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostRepository extends CrudRepository<PostEntity, Long> {
-  
+public interface PostRepository extends PagingAndSortingRepository<PostEntity, Long> {
+  List<PostEntity> getByUserIdOrderByCreatedAtDesc(long userId);
+
+  @Query(value = "SELECT p.* FROM posts p WHERE p.exposure_id = :exposure AND p.expires_at > :now ORDER BY created_at DESC LIMIT 20", nativeQuery = true)
+  List<PostEntity> getLastPublicPost(@Param("exposure") long exposureId, @Param("now") Date now);
+
+  PostEntity findByPostId(String postId);
 }

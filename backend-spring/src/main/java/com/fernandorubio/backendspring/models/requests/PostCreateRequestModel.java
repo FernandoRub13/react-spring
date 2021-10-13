@@ -6,7 +6,6 @@ public class PostCreateRequestModel {
   private String content;
   private long exposureId;
   private int expirationTime;
-  private String userEmail;
 
   public String getTitle() {
     return title;
@@ -31,12 +30,6 @@ public class PostCreateRequestModel {
   }
   public void setExpirationTime(int expirationTime) {
     this.expirationTime = expirationTime;
-  }
-  public String getUserEmail() {
-    return userEmail;
-  }
-  public void setUserEmail(String userEmail) {
-    this.userEmail = userEmail;
   }
   
 }

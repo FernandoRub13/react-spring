@@ -1,13 +1,18 @@
 package com.fernandorubio.backendspring.services;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import com.fernandorubio.backendspring.entities.PostEntity;
 import com.fernandorubio.backendspring.entities.UserEntity;
 import com.fernandorubio.backendspring.exceptions.EmailExistsException;
+import com.fernandorubio.backendspring.repositories.PostRepository;
 import com.fernandorubio.backendspring.repositories.UserRepository;
+import com.fernandorubio.backendspring.shared.dto.PostDto;
 import com.fernandorubio.backendspring.shared.dto.UserDto;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -20,12 +25,14 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserServiceInterface {
 
   @Autowired UserRepository userRepository;
+  @Autowired PostRepository postRepository;
   @Autowired BCryptPasswordEncoder bCryptPasswordEncoder;
+  @Autowired ModelMapper mapper;
 
   @Override
   public UserDto createUser(UserDto user) {
 
-    if (userRepository.findUserByEmail(user.getEmail()) != null ) 
+    if (userRepository.findByEmail(user.getEmail()) != null ) 
       throw new EmailExistsException("El correo electrónico ya existe");
     
     UserEntity userEntity = new UserEntity();
@@ -50,7 +57,7 @@ public class UserService implements UserServiceInterface {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    UserEntity userEntity = userRepository.findUserByEmail(email);
+    UserEntity userEntity = userRepository.findByEmail(email);
     
     if(userEntity == null){
       throw new UsernameNotFoundException(email);
@@ -61,7 +68,7 @@ public class UserService implements UserServiceInterface {
 
   @Override
   public UserDto getUser(String email) {
-    UserEntity userEntity = userRepository.findUserByEmail(email);
+    UserEntity userEntity = userRepository.findByEmail(email);
     
     if(userEntity == null){
       throw new UsernameNotFoundException(email);
@@ -72,6 +79,19 @@ public class UserService implements UserServiceInterface {
     BeanUtils.copyProperties(userEntity, userToReturn);
 
     return userToReturn;
+  }
+
+  @Override
+  public List<PostDto> getUserPosts(String email) {
+    
+    UserEntity userEntity = userRepository.findByEmail(email);
+    List<PostEntity> posts = postRepository.getByUserIdOrderByCreatedAtDesc(userEntity.getId());
+    List<PostDto> postDtos  = new ArrayList<>();
+    for (PostEntity post: posts) {
+      PostDto postDto = mapper.map(post, PostDto.class);
+      postDtos.add(postDto);
+    }
+    return postDtos;
   }
   
 }

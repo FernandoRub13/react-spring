@@ -1,10 +1,13 @@
 package com.fernandorubio.backendspring.models.responses;
 
+import java.util.List;
+
 public class UserRest {
   private String userId;
   private String firstName;
   private String lastName;
   private String email;
+  private List<PostRest> posts;
   
   public String getFirstName() {
     return firstName;
@@ -30,4 +33,11 @@ public class UserRest {
   public void setUserId(String userId) {
     this.userId = userId;
   }
+  public List<PostRest> getPosts() {
+    return posts;
+  }
+  public void setPosts(List<PostRest> posts) {
+    this.posts = posts;
+  }
+  
 }
