@@ -57,6 +57,7 @@ public class PostController {
 
     return postToReturn;
   }
+  
   @GetMapping(path = "/last")
   public List<PostRest> lastPosts(){
     List<PostDto> posts = postService.getLastPosts();
@@ -69,6 +70,7 @@ public class PostController {
     return postRests ;
 
   }
+  
   @GetMapping(path = "/{id}")
   public PostRest getPost(@PathVariable String id) {
     
@@ -89,6 +91,7 @@ public class PostController {
     }
     return postRest;
   } 
+  
   @DeleteMapping(path = "/{id}")
   public OperationStatusModel deletePost(@PathVariable String id){
     Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
@@ -102,6 +105,7 @@ public class PostController {
 
     return operationStatusModel;
   }
+  
   @PutMapping(path = "/{id}")
   public PostRest updatePost(@RequestBody PostCreateRequestModel postCreateRequestModel, @PathVariable String id){
 
