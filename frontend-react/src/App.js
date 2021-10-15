@@ -1,5 +1,3 @@
-
-
 import Navigation from './layouts/Navigation'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
@@ -14,7 +12,7 @@ import UserPosts from './pages/UserPosts'
 import PostDetails from './pages/PostDetails'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import 'react-confirm-alert/src/react-confirm-alert.css'
 //moment config
 import moment from 'moment'
 import 'moment/locale/es'

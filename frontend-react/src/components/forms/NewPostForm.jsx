@@ -25,7 +25,7 @@ const NewPostForm = ({errors, onSubmitCallBack, pTitle="", pContent="", pExposur
           <Col md="6" xs="12" >
             <Form.Group controlId="expirationTime" >
               <Form.Label>Tiempo de expiracion</Form.Label>
-              <Form.Control disabled={exposureId == exposures.PRIVATE} as="select" value={expirationTime} onChange={e=>setExpirationTime(e.target.value)} >
+              <Form.Control disabled={parseInt(exposureId) === exposures.PRIVATE} as="select" value={expirationTime} onChange={e=>setExpirationTime(e.target.value)} >
                 <option value="30" >30 minutos</option>
                 <option value="60" >1 hora</option>
                 <option value="120" >2 horas</option>
@@ -41,11 +41,11 @@ const NewPostForm = ({errors, onSubmitCallBack, pTitle="", pContent="", pExposur
               <Form.Label>Tipo de post</Form.Label>
               <div>
               <Form.Label>
-                <Form.Check onChange={e=>setExposureId(e.target.value)} checked={exposureId == exposures.PRIVATE} value={exposures.PRIVATE} inline label="Private" name="exposureId" type="radio"
+                <Form.Check onChange={e=>setExposureId(e.target.value)} checked={parseInt(exposureId) === exposures.PRIVATE} value={exposures.PRIVATE} inline label="Private" name="exposureId" type="radio"
                 ></Form.Check>
                 </Form.Label>
                 <Form.Label>
-                <Form.Check onChange={e=>setExposureId(e.target.value)} checked={exposureId == exposures.PUBLIC} value={exposures.PUBLIC} inline label="Public" name="exposureId" type="radio"
+                <Form.Check onChange={e=>setExposureId(e.target.value)} checked={parseInt(exposureId) === exposures.PUBLIC} value={exposures.PUBLIC} inline label="Public" name="exposureId" type="radio"
                 ></Form.Check>
                 </Form.Label>
               </div> 

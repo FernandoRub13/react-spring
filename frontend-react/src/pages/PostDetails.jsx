@@ -1,21 +1,20 @@
 import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Card, Container, Popover, Spinner, Tooltip } from 'react-bootstrap'
+import { Button, Card, Container, Spinner } from 'react-bootstrap'
 import { useHistory, useParams } from 'react-router'
 import { POST_DETAILS_ENDPOINT } from '../helpers/endpoints'
 import { Prism } from 'react-syntax-highlighter'
 import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import { downloadTextAsFile } from '../helpers/helpers'
 
 const PostDetails = () => {
   const { id } = useParams()
   const history = useHistory()
   const [post, setPost] = useState(null)
-  const [show, setShow] = useState(false)
-  const target = useRef(null);
+  const target = useRef(null)
 
   useEffect(() => {
     axios
@@ -26,7 +25,7 @@ const PostDetails = () => {
       .catch((e) => {
         history.push('/')
       })
-  }, [])
+  }, [id, history])
   return (
     <Container>
       {post ? (
@@ -41,41 +40,41 @@ const PostDetails = () => {
 
           <Card>
             <Card.Header>
-              
-              <Button variant="primary" size="sm" onClick={() => {
-                downloadTextAsFile(post.title, post.content)
-              }}>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => {
+                  downloadTextAsFile(post.title, post.content)
+                }}
+              >
                 Descargar
               </Button>
 
               <CopyToClipboard
-              
                 children
                 onCopy={() => {
                   toast.success('Copiado', {
-                    position: "top-right",
+                    position: 'top-right',
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: 'dark'
-                    });
+                    theme: 'dark',
+                  })
                 }}
                 text={post.content}
               >
-                <Button 
-                  ref={target} 
+                <Button
+                  ref={target}
                   className="mx-2"
                   variant="primary"
                   size="sm"
                 >
                   Copiar
                 </Button>
-                
               </CopyToClipboard>
-              
             </Card.Header>
             <Card.Body>
               <Prism language="javascript" style={darcula} showLineNumbers>

@@ -1,4 +1,4 @@
 export const exposures = {
   PRIVATE: 1,
-  PUBLIC: 2
+  PUBLIC: 2,
 }

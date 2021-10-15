@@ -1,23 +1,25 @@
-import setAuthToken from "./setAuthToken"
+import setAuthToken from './setAuthToken'
 import jwt_decode from 'jwt-decode'
 import store from '../store'
-import { logOutUser, setCurrentUser } from "../actions/authActions";
+import { logOutUser, setCurrentUser } from '../actions/authActions'
 
-const checkForToken =()=>{
+const checkForToken = () => {
   if (localStorage.jwtToken) {
-    setAuthToken(localStorage.jwtToken);
-    const decoded = jwt_decode(localStorage.jwtToken); 
-    store.dispatch(setCurrentUser({
-      user: decoded,
-      loggedIn: true
-    }))
+    setAuthToken(localStorage.jwtToken)
+    const decoded = jwt_decode(localStorage.jwtToken)
+    store.dispatch(
+      setCurrentUser({
+        user: decoded,
+        loggedIn: true,
+      }),
+    )
 
-    const currentTime = Math.floor(Date.now() / 1000);
+    const currentTime = Math.floor(Date.now() / 1000)
     if (decoded.exp < currentTime) {
-      store.dispatch(logOutUser());
-      window.location.href = "/signin";
+      store.dispatch(logOutUser())
+      window.location.href = '/signin'
     }
   }
 }
 
-export default checkForToken;
+export default checkForToken

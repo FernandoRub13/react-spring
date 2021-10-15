@@ -5,7 +5,6 @@ import jwt_decode from 'jwt-decode'
 import setAuthToken from '../helpers/setAuthToken';
 
 export const loginUser = (userData) => dispatch => {
-  // console.log(userData);
   return new Promise((resolve, reject) =>{
     axios.post(LOGIN_ENDPOINT, userData, {
       headers: {'Accept': 'application/json', 'Content-Type':'application/json'}
@@ -19,7 +18,6 @@ export const loginUser = (userData) => dispatch => {
 
       dispatch(setCurrentUser({user: decoded, loggedIn: true}))
       
-      console.log(response);
       resolve(response)
     }).catch(error =>{
       reject(error);
@@ -48,7 +46,6 @@ export const logOutUser = ()=> dispatch =>{
 }
 
 export const registerUser = (userData) => dispatch => {
-  // console.log(userData);
   return new Promise((resolve, reject) =>{
     axios.post(REGISTER_ENDPOINT, userData, {
       headers: {'Accept': 'application/json', 'Content-Type':'application/json'}
