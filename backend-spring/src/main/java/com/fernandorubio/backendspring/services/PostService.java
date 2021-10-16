@@ -13,6 +13,7 @@ import com.fernandorubio.backendspring.repositories.PostRepository;
 import com.fernandorubio.backendspring.repositories.UserRepository;
 import com.fernandorubio.backendspring.shared.dto.PostCreationDto;
 import com.fernandorubio.backendspring.shared.dto.PostDto;
+import com.fernandorubio.backendspring.utils.Exposures;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class PostService implements PostServiceInterface {
 
   @Override
   public List<PostDto> getLastPosts() {
-    long publicExposureId = 2; 
+    long publicExposureId = Exposures.PUBLIC; 
     List<PostEntity> postEntities = postRepository.getLastPublicPost(publicExposureId, new Date(System.currentTimeMillis()));
 
     List<PostDto> postsDtos = new ArrayList<>();

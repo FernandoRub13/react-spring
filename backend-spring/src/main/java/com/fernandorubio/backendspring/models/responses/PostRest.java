@@ -8,7 +8,7 @@ public class PostRest {
   private String content;
   private Date expiresAt ;
   private Date createdAt ;
-  private boolean expired = false;
+  private boolean expired;
   private UserRest user;
 
   private ExposureRest exposure;
@@ -54,6 +54,7 @@ public class PostRest {
   }
 
   public boolean isExpired() {
+    this.expired = getExpiresAt().compareTo(new Date(System.currentTimeMillis())) < 0;
     return expired;
   }
 

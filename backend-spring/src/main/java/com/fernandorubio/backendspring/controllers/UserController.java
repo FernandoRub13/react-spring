@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.fernandorubio.backendspring.models.requests.UserDetailsRequestModel;
 import com.fernandorubio.backendspring.models.responses.PostRest;
 import com.fernandorubio.backendspring.models.responses.UserRest;
@@ -44,7 +46,7 @@ public class UserController {
     
   }
   @PostMapping
-  public UserRest postUser(@RequestBody UserDetailsRequestModel userDetails){
+  public UserRest postUser(@RequestBody @Valid  UserDetailsRequestModel userDetails){
     UserRest userToReturn = new UserRest();
     UserDto userDto = new UserDto();
 
